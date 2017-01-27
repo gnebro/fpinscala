@@ -21,16 +21,34 @@ object Monoid {
     val zero = Nil
   }
 
-  val intAddition: Monoid[Int] = sys.error("todo")
+  val intAddition: Monoid[Int] = new Monoid[Int] {
+    def op(a: Int, b: Int) = a + b
+    val zero = 0
+  }
 
-  val intMultiplication: Monoid[Int] = sys.error("todo")
+  val intMultiplication: Monoid[Int] = new Monoid[Int] {
+    def op(a: Int, b: Int) = a * b
+    val zero = 1
+  }
 
-  val booleanOr: Monoid[Boolean] = sys.error("todo")
+  val booleanOr: Monoid[Boolean] = new Monoid[Boolean] {
+    def op(a: Boolean, b: Boolean) = a || b
+    val zero = false
+  }
 
-  val booleanAnd: Monoid[Boolean] = sys.error("todo")
+  val booleanAnd: Monoid[Boolean] = new Monoid[Boolean] {
+    def op(a: Boolean, b: Boolean) = a && b
+    val zero = true
+  }
+
+  def endoMonoid[A]: Monoid[A => A] = new Monoid[A => A] {
+    def op(f1: A => A, f2: A => A) = f1 andThen f2
+    val zero = (a: A) => a
+  }
+
+  /*
 
   def optionMonoid[A]: Monoid[Option[A]] = sys.error("todo")
-
   def endoMonoid[A]: Monoid[A => A] = sys.error("todo")
 
   // TODO: Placeholder for `Prop`. Remove once you have implemented the `Prop`
@@ -88,7 +106,7 @@ object Monoid {
     sys.error("todo")
 
   def bag[A](as: IndexedSeq[A]): Map[A, Int] =
-    sys.error("todo")
+    sys.error("todo")*/
 }
 
 trait Foldable[F[_]] {
